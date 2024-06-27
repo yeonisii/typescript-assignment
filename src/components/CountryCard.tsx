@@ -1,5 +1,7 @@
 import React from "react";
 
-function CountryCard() {}
+function CountryCard() {
+  return;
+}
 
 export default CountryCard;

@@ -13,4 +13,8 @@ export type Country = {
   name: CountryName;
   cca2: string; //Country의 2글자 코드
   capital?: string[];
+  flags: {
+    png: string;
+    svg: string;
+  };
 };
