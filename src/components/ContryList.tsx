@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Countries } from "../api/Countries";
 import { Country } from "../types/County";
+import CountryCard from "./CountryCard";
 
 export default function CountryList() {
   //상태 지정
@@ -54,57 +55,28 @@ export default function CountryList() {
   // 국가 리스트 랜더링
   return (
     <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <h1 style={{ fontSize: "20px", marginTop: "20px" }}>
-        My favorite Countries
-      </h1>
-      <h1 style={{ textAlign: "center", fontSize: "25px", marginTop: "20px" }}>
+      <h1 style={{ fontSize: "27px", textAlign: "center", marginTop: "20px" }}>
         Countries
       </h1>
       <ul
         style={{
-          marginTop: "20px",
-          width: "600px",
           listStyleType: "none",
           padding: "0",
+          display: "grid",
+          marginTop: "20px",
+          gap: "20px",
+          gridTemplateColumns: "repeat(4, 1fr",
         }}
       >
         {countries.map((country) => (
-          <li
-            key={country.cca2}
-            onClick={() => handleSelectCountries(country.cca2)}
-            style={{
-              cursor: "pointer",
-              backgroundColor: selectedCountries.has(country.cca2)
-                ? "lightblue"
-                : "white",
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "10px",
-              padding: "10px",
-              borderRadius: "4px",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-            }}
-          >
-            <img
-              src={country.flags.png}
-              alt={`${country.name.common} flag`}
-              style={{
-                width: "100px",
-                marginRight: "10px",
-                height: "auto",
-                borderRadius: "4px",
-              }}
+          <li key={country.cca2}>
+            <CountryCard
+              country={country}
+              isSelected={selectedCountries.has(country.cca2)}
+              onSelect={handleSelectCountries}
             />
-            <div style={{ fontWeight: "bold" }}>{country.name.common}</div>
-            <div style={{ marginLeft: "10px" }}>
-              {country.capital?.[0] || "No capital"}
-            </div>
           </li>
         ))}
       </ul>
