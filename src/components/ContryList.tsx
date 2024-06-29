@@ -57,6 +57,9 @@ export default function CountryList() {
     <div
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
+      <h1 style={{ fontSize: "23px", textAlign: "center", marginTop: "20px" }}>
+        My Favorite Countries
+      </h1>
       <h1 style={{ fontSize: "27px", textAlign: "center", marginTop: "20px" }}>
         Countries
       </h1>
