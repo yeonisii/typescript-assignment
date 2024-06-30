@@ -2,15 +2,14 @@ import { useState, useEffect } from "react";
 import { Countries } from "../api/Countries";
 import { Country } from "../types/County";
 import CountryCard from "./CountryCard";
+import "./CountryListStyle.css";
 
 export default function CountryList() {
   //상태 지정
   const [countries, setCountries] = useState<Country[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedCountries, setSelectedCountries] = useState<Set<string>>(
-    new Set()
-  );
+  const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
 
   // 컴포넌트가 마운트 될 때 api호출
   useEffect(() => {
@@ -28,16 +27,13 @@ export default function CountryList() {
   }, []);
 
   // 국가 선택/해제
-
   const handleSelectCountries = (cca2: string) => {
     setSelectedCountries((prev) => {
-      const newSelected = new Set(prev);
-      if (newSelected.has(cca2)) {
-        newSelected.delete(cca2);
+      if (prev.includes(cca2)) {
+        return prev.filter((countryCode) => countryCode !== cca2);
       } else {
-        newSelected.add(cca2);
+        return [...prev, cca2];
       }
-      return newSelected;
     });
   };
 
@@ -52,32 +48,36 @@ export default function CountryList() {
     return <div>{error}</div>;
   }
 
+  // 선택된 국가와 선택되지 않은 국가를 분리
+  const favoriteCountries = countries.filter((country) =>
+    selectedCountries.includes(country.cca2)
+  );
+  const otherCountries = countries.filter(
+    (country) => !selectedCountries.includes(country.cca2)
+  );
+
   // 국가 리스트 랜더링
   return (
-    <div
-      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-    >
-      <h1 style={{ fontSize: "23px", textAlign: "center", marginTop: "20px" }}>
-        My Favorite Countries
-      </h1>
-      <h1 style={{ fontSize: "27px", textAlign: "center", marginTop: "20px" }}>
-        Countries
-      </h1>
-      <ul
-        style={{
-          listStyleType: "none",
-          padding: "0",
-          display: "grid",
-          marginTop: "20px",
-          gap: "20px",
-          gridTemplateColumns: "repeat(4, 1fr",
-        }}
-      >
-        {countries.map((country) => (
+    <div className="CountryListbox">
+      <h1 className="countrytitle">My Favorite Countries</h1>
+      <ul className="countryGrid">
+        {favoriteCountries.map((country) => (
           <li key={country.cca2}>
             <CountryCard
               country={country}
-              isSelected={selectedCountries.has(country.cca2)}
+              isSelected={selectedCountries.includes(country.cca2)}
+              onSelect={handleSelectCountries}
+            />
+          </li>
+        ))}
+      </ul>
+      <h1 className="countrylistTitle">Countries</h1>
+      <ul className="countryGrid">
+        {otherCountries.map((country) => (
+          <li key={country.cca2}>
+            <CountryCard
+              country={country}
+              isSelected={selectedCountries.includes(country.cca2)}
               onSelect={handleSelectCountries}
             />
           </li>
