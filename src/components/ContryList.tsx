@@ -58,8 +58,8 @@ export default function CountryList() {
 
   // 국가 리스트 랜더링
   return (
-    <div className="CountryListbox">
-      <h1 className="countrytitle">My Favorite Countries</h1>
+    <div className="countryListbox">
+      <h1 className="countryTitle">My Favorite Countries</h1>
       <ul className="countryGrid">
         {favoriteCountries.map((country) => (
           <CountryCard
