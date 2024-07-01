@@ -62,25 +62,23 @@ export default function CountryList() {
       <h1 className="countrytitle">My Favorite Countries</h1>
       <ul className="countryGrid">
         {favoriteCountries.map((country) => (
-          <li key={country.cca2}>
-            <CountryCard
-              country={country}
-              isSelected={selectedCountries.includes(country.cca2)}
-              onSelect={handleSelectCountries}
-            />
-          </li>
+          <CountryCard
+            key={country.cca2}
+            country={country}
+            isSelected={selectedCountries.includes(country.cca2)}
+            onSelect={handleSelectCountries}
+          />
         ))}
       </ul>
       <h1 className="countrylistTitle">Countries</h1>
       <ul className="countryGrid">
         {otherCountries.map((country) => (
-          <li key={country.cca2}>
-            <CountryCard
-              country={country}
-              isSelected={selectedCountries.includes(country.cca2)}
-              onSelect={handleSelectCountries}
-            />
-          </li>
+          <CountryCard
+            key={country.cca2}
+            country={country}
+            isSelected={selectedCountries.includes(country.cca2)}
+            onSelect={handleSelectCountries}
+          />
         ))}
       </ul>
     </div>
